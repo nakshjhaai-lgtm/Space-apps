@@ -5,10 +5,11 @@ export const degrees = (value: number, digits = 2) =>
 
 export const percent = (fraction: number, digits = 0) => `${(fraction * 100).toFixed(digits)}%`
 
-export const hours = (value: number) =>
-  value >= 10 ? `${value.toFixed(0)}\u00a0h` : `${value.toFixed(1)}\u00a0h`
-
-export const days = (value: number) => `${value.toFixed(0)}\u00a0days`
+/** Hours, or days and hours past two days, because the numbers this tool reports run to weeks. */
+export const hours = (value: number) => {
+  if (value >= 48) return `${Math.floor(value / 24)}\u00a0d ${Math.round(value % 24)}\u00a0h`
+  return value >= 10 ? `${value.toFixed(0)}\u00a0h` : `${value.toFixed(1)}\u00a0h`
+}
 
 const dateFormat = new Intl.DateTimeFormat('en-GB', {
   day: 'numeric',
@@ -49,3 +50,10 @@ export const parseInstant = (value: string | null, fallback: number) => {
 }
 
 export const roundToHour = (ms: number) => Math.round(ms / 3_600_000) * 3_600_000
+
+/** Parses a numeric query parameter and holds it inside a rounded range. */
+export function clampNumber(value: string | number | null, fallback: number, min: number, max: number): number {
+  const parsed = Number(value)
+  if (!Number.isFinite(parsed) || value === null || value === '') return fallback
+  return Math.max(min, Math.min(max, Math.round(parsed)))
+}

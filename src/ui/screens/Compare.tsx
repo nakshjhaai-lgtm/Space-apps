@@ -6,7 +6,7 @@ import { SITES, siteById } from '../../engine/sites.ts'
 import { FLAT_HORIZON, parseMaskParam } from '../../engine/site.ts'
 import { sampleSite, summarize, type Summary } from '../../engine/planner.ts'
 import { lunarGeometry } from '../../engine/geometry.ts'
-import { date, hours, percent, parseDay, isoDay, roundToHour } from '../format.ts'
+import { clampNumber, date, hours, percent, parseDay, isoDay, roundToHour } from '../format.ts'
 import { horizonLabel } from '../labels.ts'
 
 interface Row {
@@ -24,8 +24,8 @@ export function Compare() {
   const { query } = useLocation()
   const site = siteById(query.get('s'))
   const mask = parseMaskParam(query.get('hz')) ?? FLAT_HORIZON
-  const floor = clamp(Number(query.get('floor')), 5, 0, 30)
-  const days = clamp(Number(query.get('d')), 30, 7, 90)
+  const floor = clampNumber(query.get('floor'), 5, 0, 30)
+  const days = clampNumber(query.get('d'), 30, 7, 90)
   const startMs = parseDay(query.get('t'), roundToHour(Date.now()))
 
   const rows = useMemo(() => {
@@ -174,7 +174,7 @@ export function Compare() {
               max={30}
               step={1}
               value={floor}
-              onChange={(event) => setQuery({ floor: String(clamp(Number(event.target.value), floor, 0, 30)) })}
+              onChange={(event) => setQuery({ floor: String(clampNumber(event.target.value, floor, 0, 30)) })}
             />
             <span className="field__hint">Degrees above the skyline</span>
           </div>
@@ -232,7 +232,3 @@ export function Compare() {
   )
 }
 
-function clamp(value: number, fallback: number, min: number, max: number) {
-  if (!Number.isFinite(value)) return fallback
-  return Math.max(min, Math.min(max, Math.round(value)))
-}

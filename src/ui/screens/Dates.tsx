@@ -5,7 +5,7 @@ import { useLocation, setQuery, navigate } from '../router.ts'
 import { SITES, siteById } from '../../engine/sites.ts'
 import { FLAT_HORIZON, parseMaskParam } from '../../engine/site.ts'
 import { rankLandingDates, type LandingDate } from '../../engine/planner.ts'
-import { date, hours, percent, parseDay, isoDay, roundToHour } from '../format.ts'
+import { clampNumber, date, hours, percent, parseDay, isoDay, roundToHour } from '../format.ts'
 import { horizonLabel } from '../labels.ts'
 
 const DAY = 86_400_000
@@ -14,8 +14,8 @@ export function Dates() {
   const { query } = useLocation()
   const site = siteById(query.get('s'))
   const mask = parseMaskParam(query.get('hz')) ?? FLAT_HORIZON
-  const floor = clamp(Number(query.get('floor')), 5, 0, 30)
-  const nights = clamp(Number(query.get('nights')), 7, 3, 30)
+  const floor = clampNumber(query.get('floor'), 5, 0, 30)
+  const nights = clampNumber(query.get('nights'), 7, 3, 30)
   const fromMs = parseDay(query.get('from'), roundToHour(Date.now()))
   const toMs = Math.min(parseDay(query.get('to'), fromMs + 180 * DAY), fromMs + 365 * DAY)
 
@@ -125,7 +125,7 @@ export function Dates() {
               max={30}
               step={1}
               value={nights}
-              onChange={(event) => setQuery({ nights: String(clamp(Number(event.target.value), nights, 3, 30)) })}
+              onChange={(event) => setQuery({ nights: String(clampNumber(event.target.value, nights, 3, 30)) })}
             />
             <span className="field__hint">Days scored from each landing date</span>
           </div>
@@ -152,7 +152,3 @@ export function Dates() {
   )
 }
 
-function clamp(value: number, fallback: number, min: number, max: number) {
-  if (!Number.isFinite(value)) return fallback
-  return Math.max(min, Math.min(max, Math.round(value)))
-}

@@ -6,13 +6,16 @@ import { FLAT_HORIZON, parseMaskParam, localFrame, skyPosition } from '../../eng
 import { lunarGeometry, EARTH_RADIUS_KM, angularRadiusDeg } from '../../engine/geometry.ts'
 import { sampleSite, summarize } from '../../engine/planner.ts'
 import { jdeFromMs } from '../../engine/time.ts'
-import { degrees, hours, percent, instant } from '../format.ts'
+import { clampNumber, degrees, hours, percent, instant } from '../format.ts'
 import { horizonLabel } from '../labels.ts'
+
+const DAY = 86_400_000
 
 export function Overview() {
   const { query } = useLocation()
   const site = siteById(query.get('s'))
   const mask = parseMaskParam(query.get('hz')) ?? FLAT_HORIZON
+  const floor = clampNumber(query.get('floor'), 5, 0, 30)
   const now = useMemo(() => Math.round(Date.now() / 3_600_000) * 3_600_000, [])
 
   const reading = useMemo(() => {
@@ -22,22 +25,24 @@ export function Overview() {
     const earth = skyPosition(geometry.earthBodyKm, frame)
     const samples = sampleSite(site, {
       startMs: now,
-      endMs: now + 86_400_000,
-      stepMinutes: 15,
-      commFloorDeg: 5,
+      endMs: now + 30 * DAY,
+      stepMinutes: 60,
+      commFloorDeg: floor,
       mask,
     })
+    const current = samples[0]
     return {
       sun,
       earth,
+      sunHorizon: current.sunHorizon,
+      earthHorizon: current.earthHorizon,
+      sunUp: current.sunVisible,
+      earthUp: current.earthVisible,
       earthRadius: angularRadiusDeg(EARTH_RADIUS_KM, geometry.earthRangeKm),
-      day: summarize(samples, 15),
+      lunarDay: summarize(samples, 60),
       maxSunElevation: Math.max(...samples.map((s) => s.sun.elevation)),
     }
-  }, [now, site, mask])
-
-  const sunHorizon = mask.length ? Math.max(...mask) : 0
-  const earthBlocked = reading.earth.elevation <= Math.max(0, 5)
+  }, [now, site, mask, floor])
 
   return (
     <>
@@ -60,8 +65,8 @@ export function Overview() {
           <Readout
             label="Sun elevation"
             value={degrees(reading.sun.elevation)}
-            tone={reading.sun.elevation > sunHorizon ? 'sun' : 'blocked'}
-            provenance="above the horizontal, terrain-free"
+            tone={reading.sunUp ? 'sun' : 'blocked'}
+            provenance={`skyline ${degrees(reading.sunHorizon, 1)} at this azimuth`}
           />
           <Readout
             label="Sun azimuth"
@@ -71,28 +76,32 @@ export function Overview() {
           <Readout
             label="Earth elevation"
             value={degrees(reading.earth.elevation)}
-            tone="earth"
-            provenance="centre of the disc"
+            tone={reading.earthUp ? 'earth' : 'blocked'}
+            provenance={`skyline ${degrees(reading.earthHorizon, 1)}, floor ${degrees(floor, 0)}`}
           />
           <Readout
             label="Earth disc above horizon"
-            value={percent(Math.max(0, Math.min(1, (reading.earth.elevation + reading.earthRadius) / (2 * reading.earthRadius))), 0)}
+            value={percent(
+              Math.max(0, Math.min(1, (reading.earth.elevation + reading.earthRadius - reading.earthHorizon) / (2 * reading.earthRadius))),
+              0,
+            )}
             provenance={`angular radius ${degrees(reading.earthRadius, 2)}`}
           />
           <Readout
-            label="Sunlit over the next 24 hours"
-            value={percent(reading.day.sunlitPct / 100, 0)}
+            label="Sunlit over the next lunar day"
+            value={percent(reading.lunarDay.sunlitPct / 100, 0)}
             provenance={`horizon model: ${horizonLabel(mask)}`}
           />
           <Readout
-            label="Earth visible over the next 24 hours"
-            value={percent(reading.day.commPct / 100, 0)}
-            provenance="above the terrain and the 5 degree floor"
+            label="Earth visible over the next lunar day"
+            value={percent(reading.lunarDay.commPct / 100, 0)}
+            provenance={`above the terrain and the ${degrees(floor, 0)} floor`}
           />
         </div>
         <Note>
-          The Sun reaches {degrees(reading.maxSunElevation, 1)} at its highest in the next 24 hours. A ridge higher than
-          that removes direct sunlight entirely. Set the skyline in the horizon view to see the difference.
+          The Sun reaches {degrees(reading.maxSunElevation, 1)} at its highest over the next lunar day, thirty Earth days
+          because that is how long the Sun takes to circle the pole. A ridge higher than that removes direct sunlight
+          entirely. Set the skyline in the horizon view to see the difference.
         </Note>
       </Panel>
 
@@ -142,21 +151,33 @@ export function Overview() {
         </Panel>
       </div>
 
-      <Panel title="The next decision" hint={`${hours(reading.day.longestNightHours)} longest night in the next 24 hours`}>
+      <Panel
+        title="The next decision"
+        hint={`${hours(reading.lunarDay.longestNightHours)} longest night in the next lunar day`}
+      >
         <div className="readouts">
-          <Readout label="Longest dark stretch" value={hours(reading.day.longestNightHours)} provenance="next 24 hours" />
+          <Readout
+            label="Longest dark stretch"
+            value={hours(reading.lunarDay.longestNightHours)}
+            tone={reading.lunarDay.longestNightHours > 0 ? 'blocked' : 'sun'}
+            provenance="next lunar day"
+          />
           <Readout
             label="Longest gap without Earth"
-            value={hours(reading.day.longestCommGapHours)}
-            tone={earthBlocked ? 'blocked' : undefined}
-            provenance="above the terrain and the 5 degree floor"
+            value={hours(reading.lunarDay.longestCommGapHours)}
+            tone={reading.earthUp ? 'earth' : 'blocked'}
+            provenance={`above the terrain and the ${degrees(floor, 0)} floor`}
           />
           <Readout
             label="Insolation index"
-            value={reading.day.insolationIndex.toFixed(3)}
+            value={reading.lunarDay.insolationIndex.toFixed(3)}
             provenance="mean of sin elevation, unitless"
           />
-          <Readout label="Highest skyline sector" value={degrees(sunHorizon, 1)} provenance="from the loaded mask" />
+          <Readout
+            label="Highest skyline sector"
+            value={degrees(Math.max(...mask), 1)}
+            provenance="from the loaded mask"
+          />
         </div>
       </Panel>
     </>

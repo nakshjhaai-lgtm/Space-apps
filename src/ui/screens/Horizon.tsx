@@ -12,7 +12,7 @@ import {
   type HorizonMask,
 } from '../../engine/site.ts'
 import { sampleSite, summarize } from '../../engine/planner.ts'
-import { degrees, hours, percent, instant, isoInstant, parseInstant, roundToHour, isoDay } from '../format.ts'
+import { clampNumber, degrees, hours, percent, instant, isoInstant, parseInstant, roundToHour, isoDay } from '../format.ts'
 import { horizonLabel } from '../labels.ts'
 
 const HOURS_24 = 86_400_000
@@ -331,11 +331,6 @@ export function Horizon() {
   )
 }
 
-function clampNumber(value: string | null, fallback: number, min: number, max: number) {
-  const parsed = Number(value)
-  if (!Number.isFinite(parsed)) return fallback
-  return Math.max(min, Math.min(max, Math.round(parsed)))
-}
 
 function download(filename: string, content: string) {
   const blob = new Blob([content], { type: 'text/csv;charset=utf-8' })
