@@ -30,12 +30,16 @@ export interface Summary {
   insolationIndex: number
   sunWindows: WindowRange[]
   commWindows: WindowRange[]
+  windowHours: number
   scores: number
 }
 
 /** Composite planning score. Weights are published in the interface and in docs/SCIENCE.md. */
-export function windowScore(s: Pick<Summary, 'sunlitPct' | 'commPct' | 'bothPct' | 'longestCommGapHours'>): number {
-  const penalty = 20 * Math.min(1, s.longestCommGapHours / 12)
+export function windowScore(
+  s: Pick<Summary, 'sunlitPct' | 'commPct' | 'bothPct' | 'longestCommGapHours'> & { windowHours: number },
+): number {
+  // the gap is measured against the window it came from, so an eighteen day silence cannot score like half a day
+  const penalty = 20 * Math.min(1, s.longestCommGapHours / Math.max(1, s.windowHours))
   return 0.45 * s.sunlitPct + 0.35 * s.commPct + 0.2 * s.bothPct - penalty
 }
 
@@ -125,6 +129,7 @@ export function summarize(samples: SkySample[], stepMinutes: number): Summary {
     insolationIndex: samples.reduce((acc, s) => acc + Math.max(0, Math.sin((s.sun.elevation * Math.PI) / 180)), 0) / n,
     sunWindows: runsOf(samples, 'sunVisible', stepMinutes),
     commWindows: runsOf(samples, 'earthVisible', stepMinutes),
+    windowHours: n * (stepMinutes / 60),
     scores: 0,
   }
   summary.scores = windowScore(summary)

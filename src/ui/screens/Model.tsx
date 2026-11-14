@@ -97,7 +97,8 @@ export function Model() {
               <li>Longest night and longest communication gap: the longest unbroken run of each.</li>
               <li>
                 Score: 0.45 sunlit, plus 0.35 Earth, plus 0.20 both, minus 20 scaled by the longest communication gap
-                against 12 hours.
+                as a fraction of the window it came from. An eighteen day silence in a thirty day window therefore
+                costs more than half a day does.
               </li>
               <li>Insolation index: mean of the sine of solar elevation, a proxy for panel output per unit area.</li>
             </ul>

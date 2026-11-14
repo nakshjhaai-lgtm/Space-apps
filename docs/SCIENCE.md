@@ -93,7 +93,7 @@ Sampling default: 10 minute steps across the selected window; the comparison tab
 Composite window score, used for ranking, weights exposed in the interface:
 
 ```
-S = 0.45 sunlit% + 0.35 comm% + 0.20 both% - 20 min(1, longestCommGap / 12)
+S = 0.45 sunlit% + 0.35 comm% + 0.20 both% - 20 min(1, longestCommGap / windowLength)
 ```
 
 Range roughly -20 to 100. The subtraction punishes a long blackout, which no additive average would catch. The tool labels S as a planning aid, not a NASA figure.

@@ -81,7 +81,7 @@ export function Horizon() {
     <>
       <PageHead
         title="Where the Sun and Earth sit against the skyline"
-        lede="The band is the local skyline across 360 degrees of azimuth. The Sun crawls around it once a lunar day; Earth swings with libration. A marker inside the band has no direct view of that body."
+        lede="The band is the local skyline across 360 degrees of azimuth. The Sun searches once around it per lunar day, about 29.5 Earth days; Earth swings through a narrow libration loop. A marker inside the band has no direct view of that body."
         meta={
           <>
             <span>{site.name}</span>
@@ -159,10 +159,10 @@ export function Horizon() {
       </Panel>
 
       <div className="split">
-        <Panel flush title="Panorama" hint="24 hours of Sun and Earth motion">
+        <Panel flush title="Panorama" hint="One lunar day of Sun and Earth motion">
           <Panorama
-            sunTrack={day.map((s) => ({ azimuth: s.sun.azimuth, elevation: s.sun.elevation }))}
-            earthTrack={day.map((s) => ({ azimuth: s.earth.azimuth, elevation: s.earth.elevation }))}
+            sunTrack={month.map((s) => ({ azimuth: s.sun.azimuth, elevation: s.sun.elevation }))}
+            earthTrack={month.map((s) => ({ azimuth: s.earth.azimuth, elevation: s.earth.elevation }))}
             sun={{ azimuth: current.sun.azimuth, elevation: current.sun.elevation, blocked: !sunUp }}
             earth={{ azimuth: current.earth.azimuth, elevation: current.earth.elevation, blocked: !earthUp }}
             mask={mask}
@@ -175,11 +175,11 @@ export function Horizon() {
           <div className="legend">
             <span className="legend__item">
               <span className="legend__swatch" style={{ background: 'var(--accent)' }} aria-hidden="true" />
-              Sun marker and 24 hour track
+              Sun marker and one lunar day track
             </span>
             <span className="legend__item">
               <span className="legend__swatch" style={{ background: 'var(--earth)' }} aria-hidden="true" />
-              Earth marker and 24 hour track
+              Earth marker and one lunar day track
             </span>
             <span className="legend__item">
               <span className="legend__swatch" style={{ background: 'var(--paper-3)' }} aria-hidden="true" />

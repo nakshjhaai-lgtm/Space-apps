@@ -85,10 +85,11 @@ describe('window planning', () => {
   })
 
   it('punishes a long communication gap in the score', () => {
-    const steady = windowScore({ sunlitPct: 80, commPct: 80, bothPct: 70, longestCommGapHours: 2 })
-    const brittle = windowScore({ sunlitPct: 80, commPct: 80, bothPct: 70, longestCommGapHours: 30 })
+    const base = { sunlitPct: 80, commPct: 80, bothPct: 70, windowHours: 720 }
+    const steady = windowScore({ ...base, longestCommGapHours: 2 })
+    const brittle = windowScore({ ...base, longestCommGapHours: 360 })
     expect(brittle).toBeLessThan(steady)
-    expect(steady - brittle).toBeCloseTo(16.67, 2)
+    expect(steady - brittle).toBeCloseTo(20 * (0.5 - 2 / 720), 2)
   })
 
   it('gives a flat mask a zero horizon everywhere', () => {

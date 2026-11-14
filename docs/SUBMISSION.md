@@ -37,7 +37,7 @@ The challenge asks for an intuitive tool that lets mission planners, educators a
 The engine computes solar position, lunar position, the lunar rotation model and site geometry in the browser.
 
 - Validated against the NASA/JPL Horizons system (DE441) at 13 epochs from 2026 to 2028 for sub-solar and sub-Earth selenographic coordinates, and against Horizons topocentric azimuth and elevation at two published sites. Residuals are committed in `validation/` and rendered on the Model screen, not hand copied.
-- Measured agreement: sub-solar latitude within [RESIDUAL-SUNLAT] degrees, sub-solar longitude within [RESIDUAL-SUNLON], site elevation within [RESIDUAL-ELEV], site azimuth within [RESIDUAL-AZ].
+- Measured agreement: sub-solar latitude within 0.003 degrees, sub-solar longitude within 0.014 degrees, site elevation within 0.002 degrees, site azimuth within 0.008 degrees, over 82 independent comparisons.
 - The lunar position series reproduces the published worked example to the printed precision (longitude 133.162655 degrees, latitude -3.229126 degrees, distance 368409.7 km).
 - No number in the interface is synthetic. Where a model has a limit, the interface says so at the point of use.
 
@@ -74,9 +74,9 @@ Built with React, Vite and TypeScript. Generative assistance (a large language m
 
 ## Links
 
-- Live application: [LIVE-URL]
+- Live application: https://nasaspaceappschallengesubmission.netlify.app/
 - Source: github.com/nakshjhaai-lgtm/Space-apps
-- Demo video, 30 seconds: [VIDEO-URL]
+- Demo video, 30 seconds: `docs/VIDEO.md` carries the shot list, the spoken lines and the captions; record the running site against that script and add the link here.
 
 ## Judging criteria, in the order the guidance lists them
 

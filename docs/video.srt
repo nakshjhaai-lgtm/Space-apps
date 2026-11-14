@@ -1,0 +1,29 @@
+1
+00:00:00,300 --> 00:00:04,000
+At the lunar south pole, the Sun and the Earth
+both sit within a few degrees of the horizon.
+
+2
+00:00:04,200 --> 00:00:09,000
+A ridge decides whether a site gets power.
+Here the skyline is an input you can see and change.
+
+3
+00:00:09,200 --> 00:00:14,000
+Every reading states its own model:
+flat reference, edited mask, or imported profile.
+
+4
+00:00:14,200 --> 00:00:21,000
+Eight published candidate regions, one window,
+ranked by sunlit share, Earth visibility,
+and the worst communication gap.
+
+5
+00:00:21,200 --> 00:00:26,000
+The geometry is checked against NASA JPL Horizons,
+and the residuals are published in the app.
+
+6
+00:00:26,200 --> 00:00:29,800
+Pick a region. Pick a date. See the window.

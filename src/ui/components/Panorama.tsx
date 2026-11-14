@@ -133,13 +133,17 @@ function draw(canvas: HTMLCanvasElement, props: Omit<PanoramaProps, 'caption'>) 
     ctx.setLineDash(dashed ? [4, 4] : [])
     ctx.beginPath()
     let started = false
+    let previous: number | null = null
     for (const p of points) {
       const px = x(p.azimuth)
       const py = y(Math.max(EL_MIN, Math.min(EL_MAX, p.elevation)))
+      // a jump past 180 degrees is the 0/360 seam, not a real movement across the sky
+      if (previous !== null && Math.abs(p.azimuth - previous) > 180) started = false
       if (!started) {
         ctx.moveTo(px, py)
         started = true
       } else ctx.lineTo(px, py)
+      previous = p.azimuth
     }
     ctx.stroke()
     ctx.setLineDash([])

@@ -19,7 +19,7 @@ Word count 78, which lands near 155 words per minute with the pauses above. Read
 
 1. `npm run build && npm run preview`, open `http://localhost:4173` at 1440 by 900, browser zoom 100 percent, dark theme.
 2. Hide the bookmark bar. No cursor smoothing, no zooms, no transitions faster than a user could follow.
-3. Set the horizon to `connecting-ridge`, instant 2026-12-01T00:00Z before recording so the first frame is meaningful.
+3. Open `/?s=connecting-ridge&t=2026-12-20T00:00` before recording. On that date Earth is 5.6 degrees up and the Sun is 0.8 degrees up, so both markers are on screen and the trade-off is visible; on 1 December Earth stays below the horizon all day at this site and the comms half of the story is missing.
 4. Record each shot separately, then cut. One take per shot keeps the timing honest.
 5. Captions: burn them in. Judges may watch muted.
 
@@ -30,6 +30,10 @@ Word count 78, which lands near 155 words per minute with the pauses above. Read
 3. Compare screen, forty five seconds: what each column means, why the score subtracts the longest gap.
 4. Model screen, thirty seconds: frames, validation, limits.
 5. Close, fifteen seconds: one region, one date, one window.
+
+## Captions
+
+`docs/video.srt` carries the same six lines with timings, ready for a burn-in pass. Load it as the subtitle track in any editor, or paste the lines into the caption tool.
 
 ## What must not appear in the video
 

@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Selenorizon: seven slides</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root {
+    --paper: #1d1915;
+    --ink: #f2ece3;
+    --ink-2: #c8bfb1;
+    --muted: #9a9082;
+    --rule: #4a4238;
+    --accent: #e8b33c;
+    --earth: #7fa8c9;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #0f0d0b; color: var(--ink); }
+  body { font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  .slide {
+    width: 1280px;
+    height: 720px;
+    margin: 0 auto 24px;
+    padding: 64px 72px;
+    background: var(--paper);
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    overflow: hidden;
+    position: relative;
+  }
+  .slide__index {
+    position: absolute;
+    right: 72px;
+    bottom: 40px;
+    font: 400 13px/1 "IBM Plex Mono", ui-monospace, monospace;
+    color: var(--muted);
+  }
+  h1 { font-size: 56px; line-height: 1.06; margin: 0; letter-spacing: -0.02em; text-wrap: balance; }
+  h2 { font-size: 40px; line-height: 1.1; margin: 0; letter-spacing: -0.015em; max-width: 22ch; text-wrap: balance; }
+  p { font-size: 21px; line-height: 1.45; margin: 0; color: var(--ink-2); max-width: 62ch; }
+  .big { font-size: 34px; line-height: 1.3; color: var(--ink); max-width: 34ch; }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+  .rule { height: 1px; background: var(--rule); margin: 0; border: 0; }
+  .figure { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
+  .figure img { max-width: 100%; max-height: 100%; display: block; }
+  table { border-collapse: collapse; font-size: 18px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 9px 22px 9px 0; border-bottom: 1px solid var(--rule); }
+  th { font-weight: 600; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  td.num { font-family: "IBM Plex Mono", ui-monospace, monospace; text-align: right; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; flex: 1; align-items: start; }
+  ul { margin: 0; padding-left: 22px; font-size: 20px; line-height: 1.5; color: var(--ink-2); }
+  li + li { margin-top: 10px; }
+  li strong { color: var(--ink); font-weight: 600; }
+  .foot { margin-top: auto; display: flex; justify-content: space-between; align-items: baseline; gap: 24px; }
+  .foot span { font: 400 15px/1.4 "IBM Plex Mono", ui-monospace, monospace; color: var(--muted); }
+  .accent { color: var(--accent); }
+  .earth { color: var(--earth); }
+  .routes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .route { border: 1px solid var(--rule); padding: 18px 16px; }
+  .route b { display: block; font-size: 17px; margin-bottom: 6px; }
+  .route span { font: 400 13px/1.4 "IBM Plex Mono", ui-monospace, monospace; color: var(--muted); }
+  .timeline { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+  .timeline div { border-top: 2px solid var(--rule); padding-top: 14px; }
+  .timeline b { display: block; font-size: 19px; margin-bottom: 8px; }
+  @media print {
+    @page { size: 1280px 720px; margin: 0; }
+    body { background: #fff; }
+    .slide { margin: 0; break-after: page; page-break-after: always; }
+    .slide:last-child { break-after: auto; page-break-after: auto; }
+  }
+</style>
+</head>
+<body>
+
+<section class="slide">
+  <p class="mono">NASA Space Apps Challenge 2026 &middot; Lunar Landing Site Navigator</p>
+  <h1>Selenorizon</h1>
+  <p class="big">Solar power and communication windows for candidate lunar south pole landing sites, with the skyline that produced every number printed on the same screen.</p>
+  <hr class="rule" />
+  <div class="foot">
+    <span>Eight published candidate regions &middot; 2026 to 2028 &middot; checked against JPL Horizons</span>
+    <span>nasaspaceappschallengesubmission.netlify.app</span>
+  </div>
+  <span class="slide__index">1 / 7</span>
+</section>
+
+<section class="slide">
+  <p class="mono">The problem</p>
+  <h2>Two numbers decide a south pole landing</h2>
+  <div class="cols">
+    <ul>
+      <li>At the pole the Sun <strong>never rises above about 2&deg;</strong>. Earth stays inside a libration loop of <strong>about &plusmn;8&deg;</strong>.</li>
+      <li>A ridge a few hundred metres high therefore decides whether a site has <strong>power</strong>, <strong>a radio link</strong>, or neither.</li>
+      <li>The same site can be a good landing site in December and a dark one in January.</li>
+      <li>Today that comparison takes an ephemeris tool, a terrain viewer and a spreadsheet.</li>
+    </ul>
+    <div class="figure">
+      <img src="figures/horizon-flat-vs-ridge.png" alt="Skyline panorama in two states: flat reference and a loaded 2.6 degree ridge, with the Sun and Earth tracks drawn over one lunar day." />
+    </div>
+  </div>
+  <span class="slide__index">2 / 7</span>
+</section>
+
+<section class="slide">
+  <p class="mono">What the tool does</p>
+  <h2>One screen per decision</h2>
+  <div class="routes">
+    <div class="route"><b>Overview</b><span>Where you are, how long until the next dark stretch</span></div>
+    <div class="route"><b>Horizon</b><span>The skyline, editable by sector, with Sun and Earth tracks</span></div>
+    <div class="route"><b>Compare</b><span>Eight regions ranked over a window, exportable as CSV</span></div>
+    <div class="route"><b>Dates</b><span>The best landing dates at one site</span></div>
+  </div>
+  <ul>
+    <li>Every value is a number with a unit, a time and a <strong>provenance line</strong> saying which horizon model produced it.</li>
+    <li>All state lives in the URL, so a view can be sent to a reviewer or cited in a report.</li>
+    <li>Keyboard complete: <strong>G then H, C, D, S, M</strong> moves between screens; <strong>Control or Command and K</strong> opens the command palette.</li>
+  </ul>
+  <div class="foot"><span>Routes: /, /horizon, /compare, /dates, /sites, /model</span></div>
+  <span class="slide__index">3 / 7</span>
+</section>
+
+<section class="slide">
+  <p class="mono">Terrain is an input, not an assumption</p>
+  <h2>You can see the skyline that produced the number</h2>
+  <div class="cols">
+    <ul>
+      <li>The horizon is <strong>sixteen sector values</strong>, one per 22.5 degrees of azimuth, interpolated linearly between them.</li>
+      <li>Edit them by <strong>dragging or with the arrow keys</strong>, or paste a profile as azimuth, elevation lines.</li>
+      <li>Three modes, labelled everywhere they apply: <strong>flat reference</strong>, <strong>edited</strong>, <strong>imported from a file</strong>. Flat is the default, so no reading is silently terrain-corrected.</li>
+      <li>The flat reference is the physical ceiling, not a safety margin: it cannot hide a ridge that exists.</li>
+    </ul>
+    <div>
+      <table>
+        <thead><tr><th>Mask</th><th class="num">Sunlit, one lunar day</th><th class="num">Earth visible</th></tr></thead>
+        <tbody>
+          <tr><td>Flat reference</td><td class="num">100.0%</td><td class="num">24.5%</td></tr>
+          <tr><td>2.6&deg; ridge</td><td class="num">52.7%</td><td class="num">24.5%</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:22px;font-size:17px">Connecting Ridge, 20 December 2026. The same site, the same month, one ridge apart.</p>
+    </div>
+  </div>
+  <span class="slide__index">4 / 7</span>
+</section>
+
+<section class="slide">
+  <p class="mono">Checked, not asserted</p>
+  <h2>Residuals, not adjectives</h2>
+  <table>
+    <thead><tr><th>Quantity</th><th class="num">Points</th><th class="num">Max residual</th><th class="num">RMS</th><th class="num">Tolerance</th></tr></thead>
+    <tbody>
+      <tr><td>Sub-solar latitude</td><td class="num">13</td><td class="num">0.0031&deg;</td><td class="num">0.0016&deg;</td><td class="num">0.02&deg;</td></tr>
+      <tr><td>Sub-solar longitude</td><td class="num">13</td><td class="num">0.0140&deg;</td><td class="num">0.0096&deg;</td><td class="num">0.05&deg;</td></tr>
+      <tr><td>Sub-Earth latitude</td><td class="num">13</td><td class="num">0.0047&deg;</td><td class="num">0.0018&deg;</td><td class="num">0.05&deg;</td></tr>
+      <tr><td>Sub-Earth longitude</td><td class="num">13</td><td class="num">0.0074&deg;</td><td class="num">0.0045&deg;</td><td class="num">0.05&deg;</td></tr>
+      <tr><td>Site elevation</td><td class="num">28</td><td class="num">0.0020&deg;</td><td class="num">0.0015&deg;</td><td class="num">0.02&deg;</td></tr>
+      <tr><td>Site azimuth</td><td class="num">28</td><td class="num">0.0072&deg;</td><td class="num">0.0056&deg;</td><td class="num">0.1&deg;</td></tr>
+    </tbody>
+  </table>
+  <ul>
+    <li>Reference: <strong>JPL Horizons DE441</strong>, Moon-fixed frame, and apparent topocentric coordinates at three real surface points.</li>
+    <li>The test <strong>fails the build</strong> if any group leaves tolerance, so a regression cannot ship quietly.</li>
+    <li>Tolerance is one percent of the whole signal: at these sites the Sun never climbs higher than two degrees.</li>
+  </ul>
+  <span class="slide__index">5 / 7</span>
+</section>
+
+<section class="slide">
+  <p class="mono">What it changes</p>
+  <h2>From an afternoon to thirty seconds</h2>
+  <div class="timeline">
+    <div>
+      <b>Before</b>
+      <p>Fetch an ephemeris for the epoch. Find the terrain profile from a DEM. Intersect the two by hand for every candidate. Repeat per site, per month. Rebuild it when the date moves.</p>
+    </div>
+    <div>
+      <b>With Selenorizon</b>
+      <p>Open the comparison. Set the window and the comm elevation floor. Read the ranking, the worst gap, and the score. Export the CSV, and send the URL that reproduces it.</p>
+    </div>
+  </div>
+  <ul>
+    <li>For mission planners: a first-pass trade study that states its own inputs.</li>
+    <li>For reviewers: a residual table on the same site they are reading.</li>
+    <li>For classrooms: ten seconds to show why the south pole is hard.</li>
+  </ul>
+  <span class="slide__index">6 / 7</span>
+</section>
+
+<section class="slide">
+  <p class="mono">Limits, stated</p>
+  <h2>What this does not do</h2>
+  <ul>
+    <li><strong>No hazard detection.</strong> Slope, boulders and bearing capacity are out of scope; this plans lighting and comms.</li>
+    <li><strong>No link budget.</strong> An elevation floor is not a data rate; the floor is a user-set proxy.</li>
+    <li><strong>No thermal or power system model.</strong> Sunlit percentage is geometry, not watt-hours.</li>
+    <li><strong>No terrain ray-march in the browser.</strong> The horizon profile is the hand-off point from a LOLA DEM, and the app says so on the screens that use it.</li>
+    <li><strong>Pre-existing tools and AI assistance are disclosed</strong> in the repository, as required.</li>
+  </ul>
+  <hr class="rule" />
+  <div class="foot">
+    <span>Data: JPL Horizons DE441 &middot; IAU 2009 lunar rotation &middot; candidate regions from published south pole landing site studies</span>
+    <span>nasaspaceappschallengesubmission.netlify.app</span>
+  </div>
+  <span class="slide__index">7 / 7</span>
+</section>
+
+</body>
+</html>
