@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Selenorizon, south-pole Sun and Earth window planner">
+  <rect width="1200" height="630" fill="#1d1915"/>
+  <path d="M0 430 L150 350 L260 400 L360 330 L470 392 L520 380 L600 420 L700 340 L820 396 L930 352 L1050 404 L1200 360 L1200 630 L0 630 Z" fill="#3a342d"/>
+  <path d="M0 430 L150 350 L260 400 L360 330 L470 392 L520 380 L600 420 L700 340 L820 396 L930 352 L1050 404 L1200 360" fill="none" stroke="#6b6054" stroke-width="2"/>
+  <circle cx="880" cy="300" r="14" fill="#e8b33c"/>
+  <circle cx="268" cy="352" r="9" fill="#7fa8c9"/>
+  <text x="72" y="120" fill="#f2ece3" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif" font-size="58" font-weight="500">Selenorizon</text>
+  <text x="72" y="176" fill="#b8ac9d" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif" font-size="27">South-pole Sun and Earth window planner</text>
+  <text x="72" y="216" fill="#8f8477" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif" font-size="22">Geometry checked against NASA JPL Horizons to 0.02 degrees</text>
+  <text x="72" y="586" fill="#8f8477" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif" font-size="20">NASA Space Apps Challenge 2026, Lunar Landing Site Navigator</text>
+</svg>
