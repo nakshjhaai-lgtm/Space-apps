@@ -1,0 +1,21 @@
+{
+  "source": "NASA/JPL Horizons API, ephemeris DE441, target Moon (301), center Earth (399), frame MOON_ME, east-longitude positive, quantity 14,15",
+  "url": "https://ssd.jpl.nasa.gov/api/horizons.api",
+  "retrieved": "2026-11-14",
+  "note": "Apparent planetodetic sub-observer and sub-solar coordinates. ObsSub is the sub-Earth point.",
+  "rows": [
+    { "utc": "2026-01-01T00:00:00Z", "obsLon": 358.716549, "obsLat": -6.556142, "sunLon": 32.519634, "sunLat": -1.346422 },
+    { "utc": "2026-04-01T00:00:00Z", "obsLon": 4.549863, "obsLat": 2.343781, "sunLon": 17.357745, "sunLat": 0.893677 },
+    { "utc": "2026-06-30T00:00:00Z", "obsLon": 358.606162, "obsLat": 5.345533, "sunLon": 358.522546, "sunLat": 1.302164 },
+    { "utc": "2026-09-28T00:00:00Z", "obsLon": 355.792968, "obsLat": -5.299328, "sunLon": 339.336539, "sunLat": -0.911475 },
+    { "utc": "2026-12-01T00:00:00Z", "obsLon": 6.669340, "obsLat": 1.345975, "sunLon": 280.063976, "sunLat": -1.470809 },
+    { "utc": "2026-12-27T00:00:00Z", "obsLon": 5.135362, "obsLat": -0.591508, "sunLon": 323.849205, "sunLat": -1.116668 },
+    { "utc": "2027-03-27T00:00:00Z", "obsLon": 4.887768, "obsLat": 6.530248, "sunLon": 308.824213, "sunLat": 1.181698 },
+    { "utc": "2027-06-25T00:00:00Z", "obsLon": 355.119474, "obsLat": -2.954983, "sunLon": 290.155298, "sunLat": 1.012016 },
+    { "utc": "2027-09-23T00:00:00Z", "obsLon": 355.208889, "obsLat": -4.790896, "sunLon": 270.793587, "sunLat": -1.184073 },
+    { "utc": "2027-12-22T00:00:00Z", "obsLon": 5.452007, "obsLat": 6.576095, "sunLon": 255.061831, "sunLat": -0.829700 },
+    { "utc": "2028-03-21T00:00:00Z", "obsLon": 3.573616, "obsLat": -0.497411, "sunLon": 240.137788, "sunLat": 1.380568 },
+    { "utc": "2028-06-19T00:00:00Z", "obsLon": 354.654277, "obsLat": -6.479532, "sunLon": 221.621720, "sunLat": 0.702358 },
+    { "utc": "2028-09-17T00:00:00Z", "obsLon": 356.801942, "obsLat": 4.093313, "sunLon": 202.097248, "sunLat": -1.355977 }
+  ]
+}

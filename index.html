@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Selenorizon, south-pole Sun and Earth window planner</title>
+    <meta
+      name="description"
+      content="Pick a candidate lunar south-pole landing site and a date. See where the Sun and Earth sit against the local skyline, for solar power and for direct-to-Earth comms."
+    />
+    <meta name="theme-color" content="#2b2721" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="canonical" href="https://nasaspaceappschallengesubmission.netlify.app/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Selenorizon, south-pole Sun and Earth window planner" />
+    <meta
+      property="og:description"
+      content="Which candidate landing region, on which date, and when the Sun and Earth clear the ridge. Geometry validated against NASA JPL Horizons."
+    />
+    <meta property="og:image" content="/og.svg" />
+    <meta property="og:url" content="https://nasaspaceappschallengesubmission.netlify.app/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Selenorizon",
+        "applicationCategory": "ScienceApplication",
+        "operatingSystem": "Any modern browser",
+        "description": "South-pole Sun and Earth window planner for candidate lunar landing regions, with an inspectable terrain horizon and residuals published against NASA JPL Horizons.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "isAccessibleForFree": true,
+        "creator": { "@type": "Organization", "name": "Selenorizon, NASA Space Apps Challenge 2026 entry" }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <h1>Selenorizon</h1>
+      <p>
+        A south-pole window planner: for a candidate lunar landing site and a date, it shows where
+        the Sun and Earth sit against the local skyline, which decides solar power and
+        direct-to-Earth communications. The tool needs JavaScript because every reading is computed
+        in your browser from published solar and lunar position series, checked against NASA JPL
+        Horizons to within 0.02 degrees.
+      </p>
+      <p>
+        Sites are published candidate points in NASA's Artemis III candidate regions. The terrain
+        horizon is an editable or importable profile of sixteen sector values.
+      </p>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
