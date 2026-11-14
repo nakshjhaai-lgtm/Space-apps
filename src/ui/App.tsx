@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useLocation } from './router.ts'
+import { navigate, useLinkInterception, useLocation } from './router.ts'
 import { Rail, ROUTES } from './components/Rail.tsx'
 import { CommandPalette } from './components/CommandPalette.tsx'
 import { siteById } from '../engine/sites.ts'
@@ -45,6 +45,7 @@ const META: Record<string, { title: string; description: string }> = {
 }
 
 export function App() {
+  useLinkInterception()
   const { path, query } = useLocation()
   const site = siteById(query.get('s'))
   const [paletteOpen, setPaletteOpen] = useState(false)
@@ -79,7 +80,7 @@ export function App() {
         const route = ROUTES.find((r) => r.key === event.key.toLowerCase())
         if (route) {
           event.preventDefault()
-          window.location.assign(`${route.path}?s=${site.id}`)
+          navigate(`${route.path}?s=${site.id}`)
         }
         setPendingG(false)
       }

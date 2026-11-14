@@ -14,12 +14,12 @@ This matrix is filled during the audit pass (BUILD-PLAN item 15) against the bui
 | 4 Animations and interactions | applied | three durations, one easing, transform and opacity only, no entrance animation, no scroll reveal, no hover lift, no decorative motion, press feedback at 0.98 |
 | 5 Copywriting and content | applied | no em dashes, no negative parallelism, no staccato triplets, no superlatives, no fake testimonials or logos, no placeholder text, units with non-breaking spaces |
 | 6 UX behaviour and functionality | applied | every button acts, loading and error and empty states specified in UX-SPEC section 3, no dead links, back button works, no fake local storage backend |
-| 7 Responsive and mobile design | applied | four breakpoints specified and tested at 320, 390, 768, 1440; 44 px targets; no horizontal page scroll; panorama scales with its container |
+| 7 Responsive and mobile design | applied | breakpoints at 900, 720, 560 and 400 px; the rail collapses to a horizontal strip and the panorama reflows to 4:3 below 720; interactive targets at 44 px; no fixed pixel widths that can overflow a 320 px viewport; the panorama and the sector band size from their container and stay inside it |
 | 8 Performance and technical | applied | static build, no third-party scripts, fonts self-hosted as woff2 subset, canvas for the heavy chart, computation memoised, bundle budget stated |
 | 9 Code-level signals | applied | no `'use client'` carpet bombing, no type laundering, no `any`, no change-narration comments, no dead code, no parallel error patterns, one memo boundary per screen |
 | 10 SEO and meta signals | applied | unique title and description per route, canonical, sitemap, robots, structured data, semantic headings |
 | 11 Trust and credibility | applied | sources with links, stated limits, independence note, no invented team or testimonials, licence file present |
-| 12 Accessibility | applied | keyboard reachability, focus visible, contrast in both themes, live regions for committed changes, text alternative for the chart, reduced motion |
+| 12 Accessibility | applied | measured contrast in both themes (`src/ui/__tests__/contrast.test.ts` asserts every token pair at or above 4.5:1, lowest is the light theme accent at 4.54:1); skip link; `aria-current` on the current destination; every form control has a real label element; canvas carries `role=img` and a caption; sector band is a group of sixteen buttons with arrow-key control; reduced motion honoured; dialog palette handles Escape natively |
 | 13 Security vulnerabilities | applied | static site, no secrets, no user data, no authentication surface, CSP and the standard header set, no wildcard CORS, imports parsed and range-checked |
 | 14 Tool-specific fingerprints | applied | no Lovable, Bolt, v0 or Replit artefacts; no default favicon; no watermark; no template copy; framework choice is a static build with hand-authored CSS |
 | 15 Overcorrection aesthetics | applied | not cream-and-sage, not near-black plus acid green, not neo-brutalist offset shadows, not hairline broadsheet; every token is referenced by a component, no orphan tokens |
@@ -29,12 +29,31 @@ This matrix is filled during the audit pass (BUILD-PLAN item 15) against the bui
 | 19 Post-em-dash copywriting | applied | no pseudo-agency, no copulative avoidance, no dangling participial tails, no colon reveals, sentence length varied, `is` and `has` used plainly |
 | 20 Code-level, AST and architecture | applied | no removed assertions, no suppressions, no whole-sentence identifiers, tests assert real numbers, no defensive probing on internal paths |
 
+## How this was audited
+
+Every row above was checked against the built output, not against the plan:
+
+| Check | Method | Result |
+| --- | --- | --- |
+| Classes used by components exist in CSS | script comparing every `className` token to the stylesheet | 70 classes, 0 missing |
+| No orphan CSS | script comparing every selector to the source | 3 genuine orphans removed, state classes are built from a template and count as used |
+| No missing custom properties | script comparing every `var(--x)` to `tokens.css` | 0 undefined, 5 unused tokens removed |
+| Contrast, both themes | `src/ui/__tests__/contrast.test.ts`, OKLCH converted to linear sRGB | 14 pairs, all at or above 4.5:1 |
+| No gradients, glass or glow | grep for `linear-gradient`, `backdrop-filter`, `blur(` | none; three box shadows, two are inset accent bars and one is the palette elevation |
+| No emoji or decorative icons | Unicode range scan of every source file | none |
+| No placeholder copy | grep for `lorem`, `TODO`, `coming soon` | none |
+| Every screen renders and its state works | 24 tests across `src/engine/__tests__` and `src/ui/__tests__` | green |
+
+What is **not** in that table: pixel-level rendering at the four breakpoints, and a real screen-reader pass. Neither could be
+performed in the build environment used here, which has no browser. They are the remaining manual steps, listed in
+`docs/BUILD-PLAN.md`.
+
 ## Part II, items added
 
 | Section | Status | Evidence |
 | --- | --- | --- |
-| 21 Anti-vibe-coded checklist (20) | applied | custom 404, primary action above the fold on every screen, internal links, breadcrumb trail in the shell, five FAQs on the Model screen, unique titles, meta descriptions, social image, alt text, structured data, privacy section, independence note, real credits |
-| 22 Features and UX upgrades (32) | applied | theme toggle persisted, skip link, keyboard shortcuts, command palette, copy link, print stylesheet, last updated line, sortable tables, filter inputs, error and success states, offline after first load |
+| 21 Anti-vibe-coded checklist (20) | applied | custom 404 with real destinations; the rail marks the current screen and every screen opens with a heading that states its own question, which replaces a breadcrumb; five answered questions on the Model screen; unique title and description per route; social image and structured data in `index.html`; alt text and captions on every chart; independence note and data credits |
+| 22 Features and UX upgrades (32) | applied | theme toggle persisted in localStorage, skip link, `g` then letter navigation, Control or Command and K palette, copy link, CSV export, print stylesheet, last updated line on the Model screen, sortable tables with `aria-sort`, site filter, error and confirmation states on the profile import |
 | 23 Fixes checklist (24) | applied | no horizontal scroll, mobile menu at 900, every route reachable, logo links home, favicon, unique titles, real error copy, current copyright year |
 | 24 Speed checklist (14) | applied | SVG and canvas instead of raster, woff2 subset fonts, memoised computation, no third-party script, layout stability by fixed chart box, measured build size |
 | 25 AI visibility checklist (20) | applied | crawler-friendly robots, sitemap, structured data, semantic HTML, descriptive headings, Answer-style content on the Model screen, sources cited, author and date lines, internal links |

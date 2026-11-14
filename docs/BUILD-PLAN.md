@@ -55,3 +55,25 @@ Definition of done for phase 0: an engineer could build the product from these f
 4. CSV export of the hourly series (the comparison export stays).
 
 Never cut: validation, the model page, the keyboard reachability of the primary controls, the SI disclosure, the submission documents.
+
+## Verification status
+
+| Gate | State |
+| --- | --- |
+| Typecheck | green, `tsc --noEmit` |
+| Tests | 39 green: engine against committed Horizons samples, planning arithmetic, every screen in jsdom, router, palette, theme, sector editor by pointer and keyboard, contrast of every colour pair in both themes |
+| Residuals | six groups inside tolerance, worst 0.014 degrees |
+| Build | green, 104 kB gzipped JavaScript, 4.5 kB gzipped CSS |
+| Anti-slop audit | recorded in `docs/COVERAGE-MATRIX.md`, with the method for each row |
+| Live site | git push to the Netlify-connected branch |
+
+## Remaining manual steps
+
+These need a browser and a person, and are the only gates not closed here:
+
+1. Open each of the six routes at 1440, 900, 720 and 390 px wide. Check that the rail collapses, that the panorama keeps its
+   aspect ratio, and that nothing scrolls sideways.
+2. Tab through the horizon screen and confirm the sector band takes focus one sector at a time, with the ring visible.
+3. Read the panorama in light mode, where the skyline band and the ground are closest in value.
+4. Record the 30 second demo against `docs/VIDEO.md`, burning in `docs/video.srt`.
+5. Export `docs/deck.html` to PDF at 1280 by 720 if the deck is submitted instead of the video.

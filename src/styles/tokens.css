@@ -14,7 +14,6 @@
   --accent-ink: oklch(0.22 0.03 78);
   --earth: oklch(0.72 0.07 235);
   --danger: oklch(0.7 0.13 28);
-  --shadow: 0 1px 2px oklch(0.1 0.01 75 / 0.4);
 
   /* type */
   --font-sans: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -25,7 +24,6 @@
   --t-16: 1rem;
   --t-20: 1.25rem;
   --t-28: 1.75rem;
-  --t-34: 2.125rem;
 
   /* space, on a 4px grid */
   --s-1: 4px;
@@ -45,7 +43,6 @@
 
   /* motion */
   --dur-feedback: 120ms;
-  --dur-context: 240ms;
   --ease: cubic-bezier(0.2, 0, 0, 1);
 
   --rail-w: 232px;
@@ -61,9 +58,8 @@
   --ink: oklch(0.225 0.01 75);
   --ink-2: oklch(0.38 0.01 75);
   --muted: oklch(0.505 0.01 75);
-  --accent: oklch(0.585 0.135 70);
+  --accent: oklch(0.55 0.135 70);
   --accent-ink: oklch(0.99 0.005 80);
   --earth: oklch(0.49 0.08 240);
   --danger: oklch(0.52 0.16 28);
-  --shadow: 0 1px 2px oklch(0.4 0.02 75 / 0.12);
 }

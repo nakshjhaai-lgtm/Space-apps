@@ -35,6 +35,7 @@ export function CommandPalette({ open, onClose, siteId }: { open: boolean; onClo
         ref={inputRef}
         className="palette__input"
         type="search"
+        aria-label="Search destinations"
         placeholder="Go to…"
         value={query}
         onChange={(event) => {
@@ -56,7 +57,7 @@ export function CommandPalette({ open, onClose, siteId }: { open: boolean; onClo
           }
         }}
       />
-      <ul className="palette__list">
+      <ul className="palette__list" aria-label="Destinations">
         {matches.map((route, index) => (
           <li key={route.path}>
             <a

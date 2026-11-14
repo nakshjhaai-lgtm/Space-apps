@@ -1,6 +1,6 @@
 # Validation against JPL Horizons
 
-Generated 2026-11-14T19:10:11.883Z by `node --experimental-strip-types scripts/validate.ts`.
+Generated 2026-11-14T19:13:31.004Z by `node --experimental-strip-types scripts/validate.ts`.
 The same run writes `validation/residuals.json`, which the model screen reads at runtime, so the numbers on the
 website are the numbers in this report.
 
